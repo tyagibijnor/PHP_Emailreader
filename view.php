@@ -135,4 +135,5 @@ $(function() {
 });
 </script>
 <?php }
+
 else { die('Not allowed');} ?> 
