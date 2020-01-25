@@ -1,7 +1,7 @@
 <?php
-// Start the session
 
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +69,8 @@ session_start();
 					 		$pass = $_POST['pass'];
 					 		$_SESSION['mailusername'] = $email;
 					 		$_SESSION['mailpassword'] = $pass;
-					 		$newurl = "http://localhost/inboxreader/view.php";
+					 		$_SESSION['testing'] = time();
+					 		$newurl = "http://localhost/fetchemail/view.php";
 					 		header('Location: '.$newurl); 
 					 }  
 					 else {

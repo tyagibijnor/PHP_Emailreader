@@ -1,30 +1,30 @@
 <?php 
+$inactive = 300; //  300 second
+ini_set('session.gc_maxlifetime', $inactive); 
 session_start();
-if(isset($_SESSION['mailusername']) && !empty($_SESSION['mailpassword'])) {
+if (isset($_SESSION['testing']) && (time() - $_SESSION['testing'] > $inactive)) {
+	    session_unset();     // unset $_SESSION variable for this page
+	    session_destroy();
+	    $_SESSION['msg']="Session Expired";
+	    header('Location:http://localhost/fetchemail');
+	}
+else {
+	if(isset($_SESSION['mailusername']) && !empty($_SESSION['mailpassword'])) {
 	$emailuser = $_SESSION['mailusername'];
 	$emailpass = $_SESSION['mailpassword'];
-   ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>
-		Email Reader
-	</title>
+   	?>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<title>Email Reader</title>
 	<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
-<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
-<style>
-body {
-	padding: 20px 10px 20px 10px
-}
-</style>
-
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-
-</head>
+	<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet">
+		<style> body {
+			 		 padding: 20px 10px 20px 10px }
+			 		</style>
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+	</head>
 <body>
-
-
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-12"> 
@@ -61,7 +61,6 @@ body {
 </div>
 </body>
 </html>
-
 <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
@@ -133,7 +132,7 @@ $(function() {
 	});
 			
 });
-</script>
-<?php }
-
-else { die('Not allowed');} ?> 
+</script> <?php }  else {
+$_SESSION['msg']="Session Expired";
+	    header('Location:http://localhost/fetchemail');
+	     } }?>
