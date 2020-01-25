@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['testing']) && (time() - $_SESSION['testing'] > $inactive)) {
 	    session_unset();     // unset $_SESSION variable for this page
 	    session_destroy();
-	    $_SESSION['msg']="Session Expired";
+	    $_SESSION['msg']="<span style='color:red'>Access not allowed</span>";
 	    header('Location:http://localhost/fetchemail');
 	}
 else {
@@ -133,6 +133,6 @@ $(function() {
 			
 });
 </script> <?php }  else {
-$_SESSION['msg']="Session Expired";
+ $_SESSION['msg']="<span style='color:red'>Access not allowed</span>";
 	    header('Location:http://localhost/fetchemail');
 	     } }?>
