@@ -21,3 +21,4 @@ if($connect){
 }else{
 	echo json_encode(array("status" => "error", "message" => "Not connect."), JSON_PRETTY_PRINT);
 }
+?>
