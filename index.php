@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 session_start();
 
 ?>
@@ -65,20 +65,33 @@ session_start();
 				<center><?php
 					if(isset($_POST['username']) && (!empty($_POST['pass'])))
 					 {
-					 		$email = $_POST['username'];
-					 		$pass = $_POST['pass'];
-					 		$_SESSION['mailusername'] = $email;
-					 		$_SESSION['mailpassword'] = $pass;
+					 		include_once('lib/class.imap.php');
+					 		$emailpass=$_POST['pass'];
+					 		$emailuser=$_POST['username'];
+							$email = new Imap();
+ 							$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
+ 							$connect=$email->connect($hostname, $emailuser,$emailpass);
+ 							if($connect){
+ 							$_SESSION['mailusername'] = $emailuser;
+					 		$_SESSION['mailpassword'] = $emailpass;
 					 		$_SESSION['testing'] = time();
 					 		$newurl = "http://localhost/fetchemail/view.php";
 					 		header('Location: '.$newurl); 
+
+ 						}
+ 						else{
+ 							$msg= TRUE;
+
+ 						}
+
+					 		
 					 }  
 					 else {
-					 	   
+											 	   
 
 					 }
 					
-					if(isset($_SESSION['msg'])) { echo $_SESSION['msg']; } ?></center>	
+					if(isset($msg)) { echo "Failed to Connect"; } ?></center>	
 			</div>
 			
 		</div>

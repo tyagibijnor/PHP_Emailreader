@@ -18,8 +18,10 @@ if($connect){
 		echo json_encode($inbox, JSON_PRETTY_PRINT);
 	}else {
 		echo json_encode(array("status" => "error", "message" => "Not connect."), JSON_PRETTY_PRINT);
-	}
-}else{
+		}
+}
+else{
 	echo json_encode(array("status" => "error", "message" => "Not connect."), JSON_PRETTY_PRINT);
+	
 }
 ?>
