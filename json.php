@@ -1,4 +1,5 @@
 <?php
+
 session_start();// include Imap.Class
 $emailuser = $_SESSION['mailusername'];
 $emailpass = $_SESSION['mailpassword'];

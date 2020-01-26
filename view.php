@@ -1,4 +1,5 @@
 <?php 
+error_reporting(0);
 $inactive = 300; //  300 second
 ini_set('session.gc_maxlifetime', $inactive); 
 session_start();
@@ -80,6 +81,7 @@ $(function() {
 		if(d.status === "success"){
 			var tbody = "";
 			json = d.data;
+			console.log('In Success');
 			$.each(json, function(i, a) {
 				tbody += '<tr><td>' + (i + 1) + '</td>';
 				tbody += '<td><a href="#" data-id="' + i + '" class="view" data-toggle="modal" data-target="#addModal">' + a.subject.substring(0, 20) + '</a></td>';
@@ -91,6 +93,7 @@ $(function() {
 			$('#myTable').DataTable();
 			$.LoadingOverlay("hide");
 		}else{
+			console.log('Not Success');
 			alert(d.message);
 		}
 	});
