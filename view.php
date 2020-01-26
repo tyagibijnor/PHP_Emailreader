@@ -1,5 +1,6 @@
 <?php 
 error_reporting(0);
+
 $inactive = 300; //  300 second
 ini_set('session.gc_maxlifetime', $inactive); 
 session_start();
