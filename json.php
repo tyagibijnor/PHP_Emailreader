@@ -1,12 +1,12 @@
 <?php
-
 session_start();// include Imap.Class
-$emailuser = $_SESSION['mailusername'];
-$emailpass = $_SESSION['mailpassword'];
+$user = $_SESSION['mailuser'];
+$pass = $_SESSION['mailpass'];
+$id = $_SESSION['id'];
 include_once('lib/class.imap.php');
- $email = new Imap();
- $hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
- $connect=$email->connect($hostname, $emailuser,$emailpass);
+$email = new Imap();
+$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
+$connect=$email->connect($hostname, $user,$pass);
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 if($connect){

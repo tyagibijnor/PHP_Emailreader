@@ -1,7 +1,7 @@
 <?php
 error_reporting(0);
+ini_set('max_execution_time', 300);
 session_start();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,35 +63,26 @@ session_start();
 					</div>
 				</form>
 				<center><?php
-					if(isset($_POST['username']) && (!empty($_POST['pass'])))
-					 {
+					if(isset($_POST['username']) && (!empty($_POST['pass']))){
 					 		include_once('lib/class.imap.php');
-					 		$emailpass=$_POST['pass'];
-					 		$emailuser=$_POST['username'];
-							$email = new Imap();
+					 		$check = new Imap();
  							$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
- 							$connect=$email->connect($hostname, $emailuser,$emailpass);
+ 							$connect=$check->connect($hostname,$_POST['username'],$_POST['pass']);
  							if($connect){
- 							$_SESSION['mailusername'] = $emailuser;
-					 		$_SESSION['mailpassword'] = $emailpass;
-					 		$_SESSION['testing'] = time();
-					 		$newurl = "http://localhost/fetchemail/view.php";
-					 		header('Location: '.$newurl); 
-
- 						}
- 						else{
- 							$msg= TRUE;
-
- 						}
-
-					 		
-					 }  
-					 else {
-											 	   
-
-					 }
-					
-					if(isset($msg)) { echo "Failed to Connect"; } ?></center>	
+	 							$_SESSION['id'] = TRUE;
+	 							$_SESSION['mailuser'] = $_POST['username'];
+	 							$_SESSION['mailpass'] = $_POST['pass'];
+						 		$_SESSION['testing'] = time();
+						 		$newurl = "http://localhost/fetchemail/view.php";
+						 		header('Location: '.$newurl); 
+	 							}
+ 							else{ $_SESSION['msg']="<span style='color:red'>".imap_last_error()."</span>"; }
+  						 		
+					 	}  
+					else { }
+					if(isset($_SESSION['msg'])) { echo $_SESSION['msg']; 
+					session_unset();     // unset $_SESSION variable for this page
+	    			session_destroy(); }?></center>	
 			</div>
 			
 		</div>

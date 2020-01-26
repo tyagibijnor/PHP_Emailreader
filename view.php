@@ -1,20 +1,16 @@
 <?php 
 error_reporting(0);
-
 $inactive = 300; //  300 second
 ini_set('session.gc_maxlifetime', $inactive); 
 session_start();
 if (isset($_SESSION['testing']) && (time() - $_SESSION['testing'] > $inactive)) {
-	    session_unset();     // unset $_SESSION variable for this page
+	    session_unset();    
 	    session_destroy();
-	    $_SESSION['msg']="<span style='color:red'>Access not allowed</span>";
+	    $_SESSION['msg']="<span style='color:red'>Time out</span>";
 	    header('Location:http://localhost/fetchemail');
 	}
 else {
-	if(isset($_SESSION['mailusername']) && !empty($_SESSION['mailpassword'])) {
-	$emailuser = $_SESSION['mailusername'];
-	$emailpass = $_SESSION['mailpassword'];
-   	?>
+	if($_SESSION['id']) {  ?>
 	<!DOCTYPE html>
 	<html>
 	<head>
@@ -30,7 +26,7 @@ else {
 <div class="container">
 	<div class="row">
 		<div class="col-md-12"> 
-			<h3 align="center">Reading Inbox of  <?php echo $emailuser; ?></h3>
+			<h3 align="center">Feching email from <?php echo $_SESSION['mailuser']; ?></h3>
 			<hr>
 			<table id="myTable" class="display" cellspacing="0" width="100%">
 				<thead>
@@ -82,7 +78,7 @@ $(function() {
 		if(d.status === "success"){
 			var tbody = "";
 			json = d.data;
-			console.log('In Success');
+			//console.log(data);
 			$.each(json, function(i, a) {
 				tbody += '<tr><td>' + (i + 1) + '</td>';
 				tbody += '<td><a href="#" data-id="' + i + '" class="view" data-toggle="modal" data-target="#addModal">' + a.subject.substring(0, 20) + '</a></td>';
@@ -94,7 +90,6 @@ $(function() {
 			$('#myTable').DataTable();
 			$.LoadingOverlay("hide");
 		}else{
-			console.log('Not Success');
 			alert(d.message);
 		}
 	});
@@ -136,7 +131,10 @@ $(function() {
 	});
 			
 });
-</script> <?php }  else {
- $_SESSION['msg']="<span style='color:red'>Access not allowed</span>";
+</script> <?php }
+  else {
+		$_SESSION['msg']="<span style='color:red'>Access not allowed</span>";
 	    header('Location:http://localhost/fetchemail');
-	     } }?>
+	     }
+ }
+ ?>
