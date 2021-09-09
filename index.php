@@ -1,7 +1,8 @@
 <?php
-error_reporting(0);
+error_reporting(1);
 ini_set('max_execution_time', 300);
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,11 +42,11 @@ session_start();
 						Email Details
 					</span>
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-						<input class="input100" type="email" name="username" placeholder="Email">
-						<span class="focus-input100"></span>
+						<input class="input100" type="email" name="username" value ="navneetyagibijnor@gmail.com" placeholder="Email">
+						<span class="focus-input100"></span> 
 					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pass" placeholder="Password" value="Kuhu@112233">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -64,11 +65,15 @@ session_start();
 				</form>
 				<center><?php
 					if(isset($_POST['username']) && (!empty($_POST['pass']))){
+						print_r($_POST);
 					 		include_once('lib/class.imap.php');
+							 
 					 		$check = new Imap();
+							 if($check){ echo "pass"; } else { echo "fail";}
  							$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
  							$connect=$check->connect($hostname,$_POST['username'],$_POST['pass']);
-							 die "here";
+							 
+							 //die("here");
  							if($connect){
 	 							$_SESSION['id'] = TRUE;
 	 							$_SESSION['mailuser'] = $_POST['username'];
