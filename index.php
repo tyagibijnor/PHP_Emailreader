@@ -68,6 +68,7 @@ session_start();
 					 		$check = new Imap();
  							$hostname = '{imap.gmail.com:993/imap/ssl/novalidate-cert}INBOX';
  							$connect=$check->connect($hostname,$_POST['username'],$_POST['pass']);
+							 die "here";
  							if($connect){
 	 							$_SESSION['id'] = TRUE;
 	 							$_SESSION['mailuser'] = $_POST['username'];
